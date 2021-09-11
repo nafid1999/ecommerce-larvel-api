@@ -28,6 +28,8 @@ class CartController extends Controller
                     $cart->update([
                         "qte" => $cart->qte+$qte,
                     ]);
+
+                    
                    
                 }else{
                     Cart::create([
@@ -42,7 +44,6 @@ class CartController extends Controller
                     [
                         "status" => 200,
                         "message" => "The product added successfully to the cart",
-                        "data"=>$cart->qte
                     ]
                 );
             } else {
