@@ -20,7 +20,8 @@ Route::get('/frontendCategories/{slug}',[FrontendController::class,"productsByCa
 Route::get('/frontendProduct/{category_slug}/{product_slug}',[FrontendController::class,"getProduct"]);
 Route::post('/add-to-cart',[CartController::class,"addToCart"]);
 Route::get('/view-cart',[CartController::class,"viewCart"]);
-Route::put('/updateCart/{cart_id}',[CartController::class,"updateCart"]);
+Route::put('/updateCart/{cart_id}/{scope}',[CartController::class,"updateCart"]);
+Route::delete('/deleteItem/{cart_id}',[CartController::class,"deleteItem"]);
 
 
 

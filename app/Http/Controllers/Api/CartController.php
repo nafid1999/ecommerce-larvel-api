@@ -88,19 +88,28 @@ class CartController extends Controller
     }
 
 
-    public function updateCart(Request $request,$id_cart)
-    {
+    public function updateCart(Request $request,$id_cart,$scope)
+    {   
+        if(auth("sanctum")->check()){
+
+       
          $cart=Cart::find($id_cart);
 
          if($cart){
-
-            $cart->update([
-                "qte"=>$request->qte
-            ]);
+             if($scope=="inc")
+                $cart->update([
+                    "qte"=>$cart->qte+1
+                ]);
+            else{
+                $cart->update([
+                    "qte"=>$cart->qte-1
+                ]);
+            }
 
             return response()->json(
                 [
                     "status" => 200,
+                    "request"=>$request->qte  
                 ]
             ,200);
          }else
@@ -109,7 +118,49 @@ class CartController extends Controller
                 "status" => 401,
             ]
         ,401);
-
-
+     }else{
+        return response()->json(
+            [
+                "status" => 401,
+                "message"=>"you are not connected"
+            ]
+        ,403);
+     }
     }
+
+    public function deleteItem($id_cart)
+    {
+        if(auth("sanctum")->check()){
+            $cart=Cart::find($id_cart);
+
+            if($cart){
+                if($cart->delete()){
+                    return response()->json(
+                        [
+                            "status" => 200,
+                            "message"=>"item deleted successfully"
+                        ]
+                    ,200);
+                 }else{
+                    return response()->json(
+                        [
+                            "status" => 401,
+                            "message"=>"Item not deleted try again"
+                        ]
+                    );
+
+                 }
+            }else{
+                return response()->json(
+                    [
+                        "status" => 402,
+                        "message"=>$id_cart
+                    ]
+                );
+            }
+        }
+
+        }
 }
+
+
