@@ -14,8 +14,6 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-
-
         if (auth("sanctum")->check()) {
 
             $product_id = $request->product_id;
@@ -64,5 +62,54 @@ class CartController extends Controller
                 ]
             );
         }
+    }
+
+    public function viewCart()
+    {
+        if (auth("sanctum")->check()) {
+               
+            $cart_items=Cart::where("user_id",1)->get();
+            return response()->json(
+                [
+                    "status" => 200,
+                    "cart" => $cart_items
+                ]
+            );
+        }else{
+
+            return response()->json(
+                [
+                    "status" => 401,
+                    "message" => "you have to login first",
+                ]
+            );
+
+        }
+    }
+
+
+    public function updateCart(Request $request,$id_cart)
+    {
+         $cart=Cart::find($id_cart);
+
+         if($cart){
+
+            $cart->update([
+                "qte"=>$request->qte
+            ]);
+
+            return response()->json(
+                [
+                    "status" => 200,
+                ]
+            ,200);
+         }else
+         return response()->json(
+            [
+                "status" => 401,
+            ]
+        ,401);
+
+
     }
 }

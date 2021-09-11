@@ -47,7 +47,7 @@ class FrontendController extends Controller
           $product=Product::where("category_id",$category->id)
                             ->where("slug",$product_slug)
                             ->where("status",1)
-                            ->get();
+                            ->first();
 
            if($product){
 

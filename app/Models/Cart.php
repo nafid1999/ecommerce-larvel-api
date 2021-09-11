@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Psy\CodeCleaner\FunctionReturnInWriteContextPass;
 
 class Cart extends Model
 {
@@ -14,4 +15,10 @@ class Cart extends Model
         "user_id",
         "qte"
     ];
+
+    protected $with=["product"];
+    
+    public function product(){
+        return $this->belongsTo(Product::class,"product_id","id");
+    }
 }

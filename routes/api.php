@@ -9,19 +9,18 @@ use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\ProductsController;
 
 
-Route::POST('/login',[AuthController::class,"login"]);
-Route::POST('/register',[AuthController::class,"register"]);
-
 /**
  * frontend routes
  */
+Route::POST('/login',[AuthController::class,"login"]);
+Route::POST('/register',[AuthController::class,"register"]);
 
 Route::get('/frontendCategories',[FrontendController::class,"categories"]);
 Route::get('/frontendCategories/{slug}',[FrontendController::class,"productsByCategory"]);
 Route::get('/frontendProduct/{category_slug}/{product_slug}',[FrontendController::class,"getProduct"]);
 Route::post('/add-to-cart',[CartController::class,"addToCart"]);
-
-
+Route::get('/view-cart',[CartController::class,"viewCart"]);
+Route::put('/updateCart/{cart_id}',[CartController::class,"updateCart"]);
 
 
 
