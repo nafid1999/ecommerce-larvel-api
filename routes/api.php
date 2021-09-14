@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\ProductsController;
 
@@ -22,6 +23,7 @@ Route::post('/add-to-cart',[CartController::class,"addToCart"]);
 Route::get('/view-cart',[CartController::class,"viewCart"]);
 Route::put('/updateCart/{cart_id}/{scope}',[CartController::class,"updateCart"]);
 Route::delete('/deleteItem/{cart_id}',[CartController::class,"deleteItem"]);
+Route::post('/place-order',[CheckoutController::class,"placeOrder"]);
 
 
 
