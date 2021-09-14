@@ -11,6 +11,7 @@ class Order extends Model
 
     protected $fillable=[
         "first_name",
+        "user_id",
          "last_name",
          "zip_code",
          "state",
@@ -21,6 +22,7 @@ class Order extends Model
          "status",
          "no_tracking",
          "payment_id",
+         "payment_mode"
          
     ];
 
