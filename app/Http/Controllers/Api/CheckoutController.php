@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderItems;
 use Illuminate\Support\Facades\Validator;
 
 class CheckoutController extends Controller
@@ -35,7 +36,7 @@ class CheckoutController extends Controller
             if($validator->fails()){
                 return response()->json(
                     [  "status"=>422,
-                        "message"=>$validator->messages()
+                        "errors"=>$validator->messages()
                     ]
                     );
             }else{
@@ -61,6 +62,7 @@ class CheckoutController extends Controller
                 $cart_items=[];
                 foreach($cart as $item){
                     $cart_items[]=[
+                        "order_id"=>1,
                         "product_id"=>$item->product_id,
                         "qte"=>$item->qte,
                         "price"=>$item->product->price
@@ -71,16 +73,19 @@ class CheckoutController extends Controller
                     ]);
                 }
 
-                return response()->json(
-                    [
-                        "status" => 401,
-                        "message" => $cart_items,
-                    ]
-                );
-
-             $order->orderItems->createMany($cart_items);
+                 
+                // DB::table('products')->insert
+               OrderItems::insert($cart_items) ;  
+                 
+              
              Cart::destroy($cart);
-
+    
+             return response()->json(
+                [
+                    "status" => 201,
+                    "message" => $cart_items,
+                ]
+            );  
             }
 
        }else{
